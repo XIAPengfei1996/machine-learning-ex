@@ -1,0 +1,212 @@
+%%%%%%% Programming Assignment
+%%%%%%% Machine Learning - Stanford University | Coursera
+%
+%
+%%%%%   Working on and Submitting Programming Assignments
+% https://www.coursera.org/learn/machine-learning/lecture/Lt2Mx/working-on-and-submitting-programming-assignments
+%
+%
+%%%%%   Linear Regression
+% Download %
+% https://s3.amazonaws.com/spark-public/ml/exercises/on-demand/machine-learning-ex1.zip
+
+octave:1> PS1('>> ')
+>> pwd
+ans = /Users/xiapengfei
+>> cd /Users/xiapengfei/Desktop/machine-learning-ex1/ex1
+>> % addpath('/Users/xiapengfei/Desktop/machine-learning-ex1/ex1’) % Can’t load!
+>> warmUpExercise()
+ans =
+
+Diagonal Matrix
+
+   1   0   0   0   0
+   0   1   0   0   0
+   0   0   1   0   0
+   0   0   0   1   0
+   0   0   0   0   1
+
+>> 
+>> X = data(:, 1); y = data(:, 2);
+>> m = length(y); % number of training examples
+>> plotData(X, y)
+>> 
+>> X = [ones(m, 1), data(:,1)]; % Add a column of ones to x
+>> theta = zeros(2, 1); % initialize fitting parameters
+>> iterations = 1500;
+>> alpha = 0.01;
+>> J = computeCost(X, y, theta)
+J =  32.073
+>> 
+>> predict1 = [1, 3.5] * theta;
+>> predict2 = [1, 7] * theta;
+>> theta = gradientDescent(X, y, theta, alpha, iterations)
+theta =
+
+  -3.6303
+   1.1664
+
+>> predict1 = [1, 3.5] * theta;
+>> predict2 = [1, 7] * theta;
+>> 
+>> ex1
+
+
+
+Running warmUpExercise ...
+5x5 Identity Matrix:
+ans =
+
+Diagonal Matrix
+
+   1   0   0   0   0
+   0   1   0   0   0
+   0   0   1   0   0
+   0   0   0   1   0
+   0   0   0   0   1
+
+Program paused. Press enter to continue.
+Plotting Data ...
+Program paused. Press enter to continue.
+
+Testing the cost function ...
+With theta = [0 ; 0]
+Cost computed = 32.072734
+Expected cost value (approx) 32.07
+
+With theta = [-1 ; 2]
+Cost computed = 54.242455
+Expected cost value (approx) 54.24
+Program paused. Press enter to continue.
+
+Running Gradient Descent ...
+Theta found by gradient descent:
+-3.630291
+1.166362
+Expected theta values (approx)
+ -3.6303
+  1.1664
+
+For population = 35,000, we predict a profit of 4519.767868
+For population = 70,000, we predict a profit of 45342.450129
+Program paused. Press enter to continue.
+Visualizing J(theta_0, theta_1) ...
+>> 
+>> 
+>> 
+>> data = load('ex1data2.txt');
+>> X = data(:, 1:2);
+>> y = data(:, 3);
+>> m = length(y);
+>> [X mu sigma] = featureNormalize(X);
+warning: operator -: automatic broadcasting operation applied
+warning: quotient: automatic broadcasting operation applied
+>> X = [ones(m, 1) X];
+>> 
+>> alpha = 0.3;
+>> num_iters = 400;
+>> theta = zeros(3, 1);
+>> [theta, J_history] = gradientDescentMulti(X, y, theta, alpha, num_iters);
+>> theta
+theta =
+
+   3.3430e+05
+   1.0009e+05
+   3.6735e+03
+
+>> plot(1:numel(J_history), J_history, '-b', 'LineWidth', 2);
+>> xlabel('Number of iterations');
+>> ylabel('Cost J');
+>> 
+>> alpha1 = 2; theta1 = zeros(3, 1);
+>> [theta1, J1] = gradientDescentMulti(X, y, theta1, alpha1, num_iters);
+>> alpha2 = 1; theta2 = zeros(3, 1);
+>> [theta2, J2] = gradientDescentMulti(X, y, theta2, alpha2, num_iters);
+>> alpha3 = 0.1; theta3 = zeros(3, 1);
+>> [theta3, J3] = gradientDescentMulti(X, y, theta3, alpha3, num_iters);
+>> plot(1:50, J1(1:50), 'g', 'LineWidth', 2);
+>> hold on;
+>> plot(1:50, J2(1:50), 'r', 'LineWidth', 2);
+>> plot(1:50, J3(1:50), 'k', 'LineWidth', 2);
+>> plot(1:numel(J_history), J_history, '-b', 'LineWidth', 2);
+>> axis([0 50 0 10^11])
+>> xlabel('Number of iterations');
+>> ylabel('Cost J');
+>> legend('α=2','α=1','α=0.1','α=0.01');
+>> title('Selecting learning rates');
+>> % print -dpng 'Selecting.png';
+warning: print.m: fig2dev binary is not available.
+Some output formats are not available.
+Fontconfig warning: ignoring UTF-8: not a valid region tag
+>> sqrt = ((1650 - mean(X(:, 2))) ./ std(X(:, 2)));
+>> br = ((3 - mean(X(:, 3))) ./ std(X(:, 3)));
+>> price =[1, sqrt, br] * theta2;
+>> price
+price =    2.9308e+05
+>> 
+>> data = csvread('ex1data2.txt');
+>> X = data(:, 1:2);
+>> y = data(:, 3);
+>> m = length(y);
+>> X = [ones(m, 1) X];
+>> theta = normalEqn(X, y)
+>> price =[1, 1650, 3] * theta
+price =    2.9308e+05
+>> 
+>> ex1_multi
+
+Loading data ...
+First 10 examples from the dataset: 
+ x = [2104 3], y = 399900 
+ x = [1600 3], y = 329900 
+ x = [2400 3], y = 369000 
+ x = [1416 2], y = 232000 
+ x = [3000 4], y = 539900 
+ x = [1985 4], y = 299900 
+ x = [1534 3], y = 314900 
+ x = [1427 3], y = 198999 
+ x = [1380 3], y = 212000 
+ x = [1494 3], y = 242500 
+Program paused. Press enter to continue.
+Normalizing Features ...
+warning: operator -: automatic broadcasting operation applied
+warning: quotient: automatic broadcasting operation applied
+Running gradient descent ...
+Theta computed from gradient descent: 
+ 334302.063993 
+ 100087.116006 
+ 3673.548451 
+
+Predicted price of a 1650 sq-ft, 3 br house (using gradient descent):
+ $289314.620338
+Program paused. Press enter to continue.
+Solving with normal equations...
+Theta computed from the normal equations: 
+ 89597.909542 
+ 139.210674 
+ -8738.019112 
+
+Predicted price of a 1650 sq-ft, 3 br house (using normal equations):
+ $293081.464335
+>> 
+Predicted price of a 1650 sq-ft, 3 br house (using normal equations):
+ $293081.464335
+>> submit()
+== Submitting solutions | Linear Regression with Multiple Variables...
+Use token from last successful submission (U201412842@hust.edu.cn)? (Y/n): Y
+warning: operator -: automatic broadcasting operation applied
+warning: quotient: automatic broadcasting operation applied
+== 
+==                                   Part Name |     Score | Feedback
+==                                   --------- |     ----- | --------
+==                            Warm-up Exercise |  10 /  10 | Nice work!
+==           Computing Cost (for One Variable) |  40 /  40 | Nice work!
+==         Gradient Descent (for One Variable) |  50 /  50 | Nice work!
+==                       Feature Normalization |   0 /   0 | Nice work!
+==     Computing Cost (for Multiple Variables) |   0 /   0 | Nice work!
+==   Gradient Descent (for Multiple Variables) |   0 /   0 | Nice work!
+==                            Normal Equations |   0 /   0 | Nice work!
+==                                   --------------------------------
+==                                             | 100 / 100 | 
+== 
+>> 
