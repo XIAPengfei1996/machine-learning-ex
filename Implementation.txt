@@ -10,6 +10,8 @@
 % Download %
 % https://s3.amazonaws.com/spark-public/ml/exercises/on-demand/machine-learning-ex1.zip
 
+
+
 octave:1> PS1('>> ')
 >> pwd
 ans = /Users/xiapengfei
@@ -191,6 +193,9 @@ Predicted price of a 1650 sq-ft, 3 br house (using normal equations):
 >> 
 Predicted price of a 1650 sq-ft, 3 br house (using normal equations):
  $293081.464335
+>> 
+>> 
+>> 
 >> submit()
 == Submitting solutions | Linear Regression with Multiple Variables...
 Use token from last successful submission (U201412842@hust.edu.cn)? (Y/n): Y
@@ -209,4 +214,157 @@ warning: quotient: automatic broadcasting operation applied
 ==                                   --------------------------------
 ==                                             | 100 / 100 | 
 == 
+
+
+
+octave:1> PS1('>> ')
+>> cd /Users/xiapengfei/Desktop/machine-learning-ex2/ex2
+>> data = load('ex2data1.txt');
+>> X = data(:, [1, 2]); y = data(:, 3);
+>> % Find Indices of Positive and Negative Examples
+>> pos = find(y == 1); neg = find(y == 0);
+>> % Plot Examples  %% NO comment in your .m file code
+>> plot(X(pos, 1), X(pos, 2), 'k+','LineWidth', 2,'MarkerSize', 7);
+>> hold on;
+>> plot(X(neg, 1), X(neg, 2), 'ko', 'MarkerFaceColor', 'y','MarkerSize', 7);
+>> xlabel('Exam 1 score')
+>> ylabel('Exam 2 score')
+>> legend('Admitted', 'Not admitted')
+>> hold off;
 >> 
+>> [m, n] = size(X);
+>> X = [ones(m, 1) X];
+>> initial_theta = zeros(n + 1, 1);
+>> h = sigmoid(X * initial_theta);
+>> J = (-1 /m ) * (y' * log(h) + (1 - y)' * log(1 - h));
+>> grad = (1 / m) * X' * (h - y);
+>> test_theta = [-24; 0.2; 0.2];
+>> h = sigmoid(X * test_theta);
+>> J = (-1 /m ) * (y' * log(h) + (1 - y)' * log(1 - h));
+>> grad = (1 / m) * X' * (h - y);
+>> 
+>> % Set options for fminunc
+>> options = optimset('GradObj', 'on', 'MaxIter', 400);
+>> % Run fminunc to obtain the optimal theta>> % This function will return theta and the cost
+>> [theta, cost] = ...
+> fminunc(@(t)(costFunction(t, X, y)), initial_theta, options);
+>> plotDecisionBoundary(theta, X, y);
+>> hold on;
+>> xlabel('Exam 1 score')
+>> ylabel('Exam 2 score')
+>> hold off;
+>> 
+>> prob = sigmoid([1 45 85] * theta);
+>> p = predict(theta, X);
+>> 
+>> ex2
+warning: broken pipe
+warning: broken pipe
+
+Plotting data with + indicating (y = 1) examples and o indicating (y = 0) examples.
+
+Program paused. Press enter to continue.
+Cost at initial theta (zeros): 0.693147
+Expected cost (approx): 0.693
+Gradient at initial theta (zeros): 
+ -0.100000 
+ -12.009217 
+ -11.262842 
+Expected gradients (approx):
+ -0.1000
+ -12.0092
+ -11.2628
+
+Cost at test theta: 0.218330
+Expected cost (approx): 0.218
+Gradient at test theta: 
+ 0.042903 
+ 2.566234 
+ 2.646797 
+Expected gradients (approx):
+ 0.043
+ 2.566
+ 2.647
+
+Program paused. Press enter to continue.
+Cost at theta found by fminunc: 0.203498
+Expected cost (approx): 0.203
+theta: 
+ -25.161272 
+ 0.206233 
+ 0.201470 
+Expected theta (approx):
+ -25.161
+ 0.206
+ 0.201
+
+Program paused. Press enter to continue.
+For a student with scores 45 and 85, we predict an admission probability of 0.776289
+Expected value: 0.775 +/- 0.002
+
+Train Accuracy: 89.000000
+Expected accuracy (approx): 89.0
+
+>> 
+>> 
+>> 
+>> ex2_reg
+
+Cost at initial theta (zeros): 0.693147
+Expected cost (approx): 0.693
+Gradient at initial theta (zeros) - first five values only:
+ 0.008475 
+ 0.018788 
+ 0.000078 
+ 0.050345 
+ 0.011501 
+Expected gradients (approx) - first five values only:
+ 0.0085
+ 0.0188
+ 0.0001
+ 0.0503
+ 0.0115
+
+Program paused. Press enter to continue.
+
+Cost at test theta (with lambda = 10): 3.164509
+Expected cost (approx): 3.16
+Gradient at test theta - first five values only:
+ 0.346045 
+ 0.161352 
+ 0.194796 
+ 0.226863 
+ 0.092186 
+Expected gradients (approx) - first five values only:
+ 0.3460
+ 0.1614
+ 0.1948
+ 0.2269
+ 0.0922
+
+Program paused. Press enter to continue.
+
+Train Accuracy: 83.050847
+Expected accuracy (with lambda = 1): 83.1 (approx)
+>> 
+>> 
+>> 
+>> submit()
+== Submitting solutions | Logistic Regression...
+Use token from last successful submission (U201412842@hust.edu.cn)? (Y/n): Y
+warning: operator -: automatic broadcasting operation applied
+warning: quotient: automatic broadcasting operation applied
+== 
+==                                   Part Name |     Score | Feedback
+==                                   --------- |     ----- | --------
+==                            Sigmoid Function |   5 /   5 | Nice work!
+==                    Logistic Regression Cost |  30 /  30 | Nice work!
+==                Logistic Regression Gradient |  30 /  30 | Nice work!
+==                                     Predict |   5 /   5 | Nice work!
+==        Regularized Logistic Regression Cost |  15 /  15 | Nice work!
+==    Regularized Logistic Regression Gradient |  15 /  15 | Nice work!
+==                                   --------------------------------
+==                                             | 100 / 100 | 
+== 
+
+
