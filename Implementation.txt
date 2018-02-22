@@ -6,11 +6,10 @@
 % https://www.coursera.org/learn/machine-learning/lecture/Lt2Mx/working-on-and-submitting-programming-assignments
 %
 %
-%%%%%   Linear Regression
-% Download %
-% https://s3.amazonaws.com/spark-public/ml/exercises/on-demand/machine-learning-ex1.zip
 
 
+
+%%%   Linear Regression
 
 octave:1> PS1('>> ')
 >> pwd
@@ -217,6 +216,8 @@ warning: quotient: automatic broadcasting operation applied
 
 
 
+%%%   Logistic Regression
+
 octave:1> PS1('>> ')
 >> cd /Users/xiapengfei/Desktop/machine-learning-ex2/ex2
 >> data = load('ex2data1.txt');
@@ -368,3 +369,132 @@ warning: quotient: automatic broadcasting operation applied
 == 
 
 
+
+%%%   Multi-class Classification and Neural Networks
+@ https://github.com/lintingbin2009/machine-learning-ex/
+
+octave:1> PS1('>> ')
+>> cd /Users/xiapengfei/Desktop/machine-learning-ex3/ex3
+>> input_layer_size  = 400; 
+>> num_labels = 10;
+>> % Load saved matrices from file
+>> load('ex3data1.mat'); % training data stored in arrays X, y
+>> % The matrices X and y will now be in your Octave environment
+>> m = size(X, 1);
+>> rand_indices = randperm(m);
+>> sel = X(rand_indices(1:100), :);
+>> displayData(sel);
+>> theta_t = [-2; -1; 1; 2];
+>> X_t = [ones(5,1) reshape(1:15,5,3)/10];
+>> y_t = ([1;0;1;0;1] >= 0.5);
+>> lambda_t = 3;
+>> [J grad] = lrCostFunction(theta_t, X_t, y_t, lambda_t);
+>> lambda = 0.1;
+>> [all_theta] = oneVsAll(X, y, num_labels, lambda);
+Iteration   500 | Cost: 1.311466e-02
+Iteration   500 | Cost: 5.080194e-02
+Iteration   500 | Cost: 5.760169e-02
+Iteration   500 | Cost: 3.306491e-02
+Iteration   500 | Cost: 5.445617e-02
+Iteration   500 | Cost: 1.825591e-02
+Iteration   500 | Cost: 3.064138e-02
+Iteration   500 | Cost: 7.844983e-02
+Iteration   500 | Cost: 7.118639e-02
+Iteration   485 | Cost: 8.567845e-03
+>> pred = predictOneVsAll(all_theta, X);
+>> ex3
+
+
+Loading and Visualizing Data ...
+Program paused. Press enter to continue.
+
+Testing lrCostFunction() with regularization
+Cost: 2.534819
+Expected cost: 2.534819
+Gradients:
+ 0.146561 
+ -0.548558 
+ 0.724722 
+ 1.398003 
+Expected gradients:
+ 0.146561
+ -0.548558
+ 0.724722
+ 1.398003
+Program paused. Press enter to continue.
+
+Training One-vs-All Logistic Regression...
+Iteration   500 | Cost: 1.311466e-02
+Iteration   500 | Cost: 5.080194e-02
+Iteration   500 | Cost: 5.760169e-02
+Iteration   500 | Cost: 3.306491e-02
+Iteration   500 | Cost: 5.445617e-02
+Iteration   500 | Cost: 1.825591e-02
+Iteration   500 | Cost: 3.064138e-02
+Iteration   500 | Cost: 7.844983e-02
+Iteration   500 | Cost: 7.118639e-02
+Iteration   485 | Cost: 8.567845e-03
+Program paused. Press enter to continue.
+
+
+Training Set Accuracy: 96.460000
+>> 
+>> 
+>>
+>> input_layer_size  = 400;
+>> hidden_layer_size = 25;
+>> num_labels = 10; 
+>> load('ex3data1.mat');
+>> m = size(X, 1);
+>> sel = randperm(size(X, 1));
+>> sel = sel(1:100);
+>> displayData(X(sel, :));
+>> load('ex3weights.mat');
+>> pred = predict(Theta1, Theta2, X);
+>> rp = randperm(m);
+>> for i = 1:m
+>     displayData(X(rp(i), :));
+>     pred = predict(Theta1, Theta2, X(rp(i),:));
+>     s = input('Paused - press enter to continue, q to exit:','s');
+>     if s == 'q'
+>       break
+>     end
+> end
+Paused - press enter to continue, q to exit:q
+>> ex3_nn
+
+Loading and Visualizing Data ...
+Program paused. Press enter to continue.
+
+Loading Saved Neural Network Parameters ...
+
+Training Set Accuracy: 97.520000
+Program paused. Press enter to continue.
+
+Displaying Example Image
+
+Neural Network Prediction: 9 (digit 9)
+Paused - press enter to continue, q to exit:q
+>> 
+>> 
+>> 
+>> submit()
+== Submitting solutions | Multi-class Classification and Neural Networks...
+Use token from last successful submission (U201412842@hust.edu.cn)? (Y/n): Y
+warning: operator -: automatic broadcasting operation applied
+warning: quotient: automatic broadcasting operation applied
+Iteration    26 | Cost: 3.391340e-01
+Iteration    29 | Cost: 6.631438e-02
+Iteration    30 | Cost: 1.002636e-01
+Iteration    22 | Cost: 3.598119e-01
+== 
+==                                   Part Name |     Score | Feedback
+==                                   --------- |     ----- | --------
+==             Regularized Logistic Regression |  30 /  30 | Nice work!
+==              One-vs-All Classifier Training |  20 /  20 | Nice work!
+==            One-vs-All Classifier Prediction |  20 /  20 | Nice work!
+==          Neural Network Prediction Function |  30 /  30 | Nice work!
+==                                   --------------------------------
+==                                             | 100 / 100 | 
+== 
+>> 
